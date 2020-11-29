@@ -1,0 +1,60 @@
+/*没有图片*/
+* {
+    box-sizing: border-box;
+  }
+  
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+  
+  button {
+    /*消除button的默认样式*/
+    /*这种写法是对所有的button标签同时生效*/
+    margin: 0px;
+    padding: 0px;
+    /*自定义边框*/
+    border: 0px;
+    /*消除默认点击蓝色边框效果*/
+    outline: none;
+  }
+  
+  /*包含以下四种的链接*/
+  a {
+    text-decoration: none;
+  }
+  
+  /*正常的未被访问过的链接*/
+  a:link {
+    text-decoration: none;
+  }
+  
+  /*已经访问过的链接*/
+  a:visited {
+    text-decoration: none;
+  }
+  
+  /*鼠标划过(停留)的链接*/
+  a:hover {
+    text-decoration: none;
+  }
+  
+  /* 正在点击的链接*/
+  a:active {
+    text-decoration: none;
+  }
+  
+  /*去掉ul li的默认样式*/
+  ul, li {
+    padding: 0;
+    margin: 0;
+    list-style: none
+  }
+  
+  
+  *::-webkit-scrollbar {
+    width: 0px;
+  }
+  
+  
