@@ -1,0 +1,79 @@
+<OCTYPE html>
+    <html>
+
+    <head>
+        <meta charset="UTF-8">
+        <title>接口模拟器</title>
+        <!-- <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" /> -->
+        <link rel="stylesheet" href="css/plugs/common.css">
+        <script src="js/plugs/jsize-horizontal-1000.js"></script>
+        <script src="js/plugs/jquery-1.11.2.min.js"></script>
+        <link rel="stylesheet" href="css/index.css">
+        <script src="js/index.js"></script>
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="left-container">
+                <button class="left-menu left-menu-active">http接口</button>
+                <button class="left-menu">websockt接口</button>
+            </div>
+            <div class="right-container">
+                <div class="http-menu">
+                    <label for="port">服务端口号：</label>
+                    <input type="number" class="number" id="port" value="8080" />
+                    <button onclick="openHttpList()">接口添加</button>
+                    <button onclick="exportInterface()">导出接口</button>
+                    <button onclick="inportInterface()">导入接口</button>
+                </div>
+                <div>接口列表：</div>
+                <div class="http-list">
+
+                </div>
+                <div>服务消息：</div>
+                <div class="http-message">
+                    信息答应： 8080 、get 。。。。
+                    <a href="https://www.baidu.com" target="_blank">帮助文档</a>
+                </div>
+
+                <button class="act-buttom" onclick="startServer()">启动服务</button>
+            </div>
+        </div>
+    </body>
+    <script>
+        let { BrowserWindow, dialog } = require('electron').remote
+        let httpserver = require('./js/http-server.js');
+
+        function openHttpList() {
+            console.log('BrowserWindow.getAllWindows(): ', BrowserWindow.getAllWindows())
+            const win = new BrowserWindow({
+                width: 900,
+                height: 700,
+                resizable: false,
+                parent: BrowserWindow.getAllWindows()[0],
+                modal: true
+            })
+            win.loadFile('src/http-edit.html')
+            win.webContents.openDevTools()
+        }
+
+        function startServer() {
+            httpserver.init('8080');
+        }
+
+        function exportInterface() {
+            dialog.showErrorBox('', '暂未开发')
+
+        }
+        function inportInterface() {
+            dialog.showErrorBox('', '暂未开发')
+
+        }
+
+        window.addEventListener('message', (msg) => {
+            console.log("收到的消息是：", msg.data)
+        })
+
+    </script>
+
+    </html>

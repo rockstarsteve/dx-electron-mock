@@ -6,15 +6,14 @@ function createWindow() {
     height: 700,
     maxWidth: 1000,
     maxHeight: 700,
-    minWidth: 700,
+    minWidth: 720,
     minHeight: 500,
-    // frame: false,//关闭原生导航栏
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      enableRemoteModule: true
     }
   })
-
-  win.loadFile('src/html/index.html')
+  win.loadFile('src/index.html')
   win.webContents.openDevTools()
 }
 
