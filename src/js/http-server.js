@@ -10,7 +10,7 @@ let http = require('http')
 let com = require('./com.js')
 
 let httpserver = {
-    port: 8080,
+    port: 8085,
     config: {},
     /**
      * 初始化服务
@@ -33,7 +33,6 @@ let httpserver = {
             if (err) {
                 alert(err);
             } else {
-                console.log("----->>>>>>")
                 this.config = JSON.parse(data);
                 app.all('*', function (req, res, next) {
                     res.header('Access-Control-Allow-Origin', '*');

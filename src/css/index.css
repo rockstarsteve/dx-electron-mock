@@ -49,3 +49,42 @@
     height: 40%;
     overflow-y: scroll;
 }
+
+.http-status-stop{
+    background-color: #6e736e;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 22px;
+    right: 105px;
+}
+
+.http-status-start{
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: rgb(8, 255, 8);
+    position: absolute;
+    bottom: 22px;
+    right: 105px;
+    animation: start 2s infinite step-start;
+}
+
+@keyframes start {
+    0% {
+        background-color: rgb(8, 255, 8);
+    }
+
+    33% {
+        background-color: #6e736e;
+    }
+
+    66% {
+        background-color: rgb(8, 255, 8);
+    }
+
+    100% {
+        background-color: #6e736e;
+    }
+}

@@ -6,6 +6,8 @@
         <title>http接口添加</title>
         <link rel="stylesheet" href="css/plugs/common.css">
         <script src="js/plugs/jsize-horizontal-1000.js"></script>
+        <script src="js/plugs/jquery-1.11.2.min.js"></script>
+        <link rel="stylesheet" href="css/http-edit.css">
     </head>
 
     <body>
@@ -25,21 +27,7 @@
             </div>
             <div class="tbl">
                 <div class="cell cell-title">参数:</div>
-                <div class="cell cell-content">
-                    <div class="cell-param-line">
-                        <input type="text" placeholder="参数名..." name="name" />
-                        <input type="number" class="number" value="20" placeholder="接收长度..." name="len" />
-                        <select name="type">
-                            <option value="string">string</option>
-                            <option value="int">int</option>
-                            <option value="float">float</option>
-                            <option value="bool">bool</option>
-                        </select>
-                        <label>
-                            required:<input type="checkbox" value="true" placeholder="必填" name="required" />
-                        </label>
-                        <input type="button" class="add button small orange" value="+" />
-                    </div>
+                <div class="cell cell-content" id="request-data">
 
                     <div class="cell-param-line">
                         <input type="text" placeholder="参数名..." name="name" />
@@ -53,103 +41,134 @@
                         <label>
                             required:<input type="checkbox" value="true" placeholder="必填" name="required" />
                         </label>
-                        <input type="button" class="param-add" value="+" />
+                        <input type="button" class="add-param" onclick="addParam()" value="+" />
+                        <input type="button" class="remove-param" value="-" />
                     </div>
+
                 </div>
             </div>
             <div class="tbl">
                 <div class="cell cell-title">返回值:</div>
                 <div class="cell cell-content cell-content-result">
-                    <div>
-                        <div class="default-rest"><textarea class="returnValue defaultValue"></textarea>(默认)</div>
-                         <div class="condition-rest">
-                            <div class="condition-rest-item">
-                                <label>参数</label>：<input type="text" placeholder="参数名..." class="paramname"/>
-                                <select class="sel-condition">
-                                    <option value="==">==</option>
-                                    <option value=">">></option>
-                                    <option value="<"><</option>
-                                    <option value="<="><=</option>
-                                    <option value=">=">>=</option>
-                                </select>
-                                <input type="text" class="txt_condition">
-                                <input type="button" class="minus button small blue" value="-"/>
-                                <textarea class="returnValue"></textarea>
-                            </div>
-                            <!-- <div class="condition-rest-item">
-                                <label>参数</label>：<input type="text" placeholder="参数名..." class="paramname"/>
-                                <select class="sel-condition">
-                                    <option value="==">==</option>
-                                    <option value=">">></option>
-                                    <option value="<"><</option>
-                                    <option value="<="><=</option>
-                                    <option value=">=">>=</option>
-                                </select>
-                                <input type="text" class="txt_condition">
-                                <input type="button" class="minus button small blue" value="-"/>
-                                <textarea class="returnValue"></textarea>
-                            </div> -->
-                        </div>
+                    <div class="default-rest"><textarea class="returnValue defaultResValue"
+                            id="defaultResValue"></textarea>(默认)</div>
+                    <div class="condition-rest" id="condition-rest">
                     </div>
                     <div class="condition-list">
-                        <input type="button" class="add_condition" value="添加条件返回" />
+                        <input type="button" class="add_condition" onclick="addRest()" value="添加条件返回" />
                     </div>
                 </div>
             </div>
             <div class="from-sub">
-                <input type="button" class="" value="添加" />
+                <button class="" onclick="submit()">添加</button>
             </div>
         </div>
     </body>
-    <style>
-        .container {
-            width: 100%;
-            height: 100%;
-            padding-left: 20px;
-            padding-top: 20px;
-        }
-
-        .tbl {
-            width: 90%;
-            display: flex;
-            padding-top: 10px;
-            padding-bottom: 10px;
-        }
-
-        .cell-title {
-            width: 15%;
-        }
-
-        .cell-content {
-            width: 70%;
-        }
-
-        .cell-content-result {
-            vertical-align: baseline;
-        }
-        .cell-param-line{
-            display: flex;
-        }
-
-        .returnValue {
-            width: 400px;
-            height: 150px;
-        }
-
-        .condition-rest-item {
-            margin-top: 10px;
-            margin-bottom: 10px;
-        }
-
-        .from-sub {
-            width: 100%;
-            padding-top: 20px;
-            padding-bottom: 20px;
-            display: flex;
-            justify-content: center;
-        }
-    </style>
     <script>
+        function addRest() {
+            console.log("0000")
+            $("#condition-rest").append(
+                '<div class="condition-rest-item">\n' +
+                '                            <label>参数</label>：<input type="text" placeholder="参数名..." class="paramname" />\n' +
+                '                            <select class="sel-condition">\n' +
+                '                                <option value="==">==</option>\n' +
+                '                                <option value=">">></option>\n' +
+                '                                <option value="<">\n' +
+                '                                    < </option>\n' +
+                '                                <option value="<=">\n' +
+                '                                    <= </option>\n' +
+                '                                <option value=">="> >= </option>\n' +
+                '                            </select>\n' +
+                '                            <input type="text" class="txt_condition">\n' +
+                '                            <input type="button" class="remove-result" value="-" />\n' +
+                '                            <textarea class="returnValue"></textarea>\n' +
+                '                        </div>'
+            )
+        }
+        function addParam() {
+            // 添加req name才能追加参数
+            var flag = true
+            $("#request-data").children().each(function () {
+                var name = $(this).find('input[name="name"]').val()
+                if (!name) {
+                    flag = false
+                }
+            });
+            if (flag) {
+                $("#request-data").append(
+                    '<div class="cell-param-line">\n' +
+                    '                        <input type="text" placeholder="参数名..." name="name" />\n' +
+                    '                        <input type="number" class="number" value="20" placeholder="接收长度..." name="len" />\n' +
+                    '                        <select name="type">\n' +
+                    '                            <option value="string">string</option>\n' +
+                    '                            <option value="int">int</option>\n' +
+                    '                            <option value="float">float</option>\n' +
+                    '                            <option value="bool">bool</option>\n' +
+                    '                        </select>\n' +
+                    '                        <label>\n' +
+                    '                            required:<input type="checkbox" value="true" placeholder="必填" name="required" />\n' +
+                    '                        </label>\n' +
+                    '                        <input type="button" class="add-param" onclick="addParam()"  value="+" />\n' +
+                    '                        <input type="button" class="remove-param"  value="-" />\n' +
+                    '                    </div>'
+                )
+            }
+        }
+
+        function submit() {
+            //请求url
+            var url = $('input[name="url"]').val()
+            //请求方法
+            var method = $("input[name='method']:checked").val();
+            //请求参数
+            var reqArray = []
+            $("#request-data").children().each(function () {
+                var req = {}
+                req.name = $(this).find('input[name="name"]').val()
+                if (req.name) {
+                    req.len = $(this).find('input[name="len"]').val()
+                    req.type = $(this).find('select[name="type"]').val()
+                    req.required = $(this).find('input[name="required"]').val()
+                    reqArray.push(req)
+                }
+            });
+            //返回值,1:默认的，2,：条件的
+            var resArray = []
+            resArray.push(
+                { "default": $("#defaultResValue").val() }
+            )
+            $("#condition-rest").children().each((index, item) => {
+                var res = {}
+                if (($.trim($(item).find('.paramname').val()) == "" && $(item).find('.paramname').length) || ($(item).find('.txtkey').length && $.trim($(item).find('.txtkey').val()) == "")) return true;
+                let condition = $(item).find('.txtkey').length ? $(item).find('.txtkey').val() : ($(item).find('.paramname').val() + $(item).find('.sel-condition').val() + "'" + ($(item).find('.txt_condition').val() + "'") || '');
+                var resv = "" + escape(condition)
+                res[escape(condition)] = $(item).find('.returnValue').val()
+                resArray.push(res)
+            });
+            
+            // TODO 保存数据
+
+
+
+
+            console.log("提交的数据是：", url, method, reqArray, resArray)
+        }
+
+
+        //删除request
+        $(function () {
+            $('#request-data').on("click", ".remove-param", function () {
+                console.log($("#request-data").children().length)
+                if ($("#request-data").children().length > 1) {
+                    $(this).parent().remove()
+                }
+            });
+
+            $('#condition-rest').on("click", ".remove-result", function () {
+                $(this).parent().remove()
+            });
+        })
+
     </script>
 
     </html>

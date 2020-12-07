@@ -21,7 +21,7 @@
             <div class="right-container">
                 <div class="http-menu">
                     <label for="port">服务端口号：</label>
-                    <input type="number" class="number" id="port" value="8080" />
+                    <input type="number" class="number" id="port" value="8085" />
                     <button onclick="openHttpList()">接口添加</button>
                     <button onclick="exportInterface()">导出接口</button>
                     <button onclick="inportInterface()">导入接口</button>
@@ -32,15 +32,16 @@
                 </div>
                 <div>服务消息：</div>
                 <div class="http-message">
-                    信息答应： 8080 、get 。。。。
+                    信息答应： 8085 、get 。。。。
                     <a href="https://www.baidu.com" target="_blank">帮助文档</a>
                 </div>
-
-                <button class="act-buttom" onclick="startServer()">启动服务</button>
+                <div class="http-status-stop" id="http-status"></div>
+                <button class="act-buttom" id="act-buttom" onclick="startServer()">启动服务</button>
             </div>
         </div>
     </body>
     <script>
+        var server
         let { BrowserWindow, dialog } = require('electron').remote
         let httpserver = require('./js/http-server.js');
 
@@ -54,26 +55,36 @@
                 modal: true
             })
             win.loadFile('src/http-edit.html')
-            win.webContents.openDevTools()
+            // win.webContents.openDevTools()
         }
 
         function startServer() {
-            httpserver.init('8080');
+            if (this.server) {
+                this.server.close(() => {
+                    this.server = null;
+                    document.getElementById("http-status").className = 'http-status-stop'
+                    document.getElementById("act-buttom").innerHTML = "开启服务"
+                });
+            } else {
+                console.log("开启服务。。。。")
+                this.server = httpserver.init('8085');
+                if(this.server){
+                    document.getElementById("http-status").className = 'http-status-start'
+                    document.getElementById("act-buttom").innerHTML = "关闭服务"
+                }
+            }
         }
 
         function exportInterface() {
             dialog.showErrorBox('', '暂未开发')
-
         }
         function inportInterface() {
             dialog.showErrorBox('', '暂未开发')
-
         }
 
         window.addEventListener('message', (msg) => {
             console.log("收到的消息是：", msg.data)
         })
-
     </script>
 
     </html>

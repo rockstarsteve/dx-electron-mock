@@ -1,0 +1,46 @@
+.container {
+    width: 100%;
+    height: 100%;
+    padding-left: 20px;
+    padding-top: 20px;
+}
+
+.tbl {
+    width: 90%;
+    display: flex;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.cell-title {
+    width: 15%;
+}
+
+.cell-content {
+    width: 70%;
+}
+
+.cell-content-result {
+    vertical-align: baseline;
+}
+.cell-param-line{
+    display: flex;
+}
+
+.returnValue {
+    width: 400px;
+    height: 150px;
+}
+
+.condition-rest-item {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.from-sub {
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    display: flex;
+    justify-content: center;
+}
