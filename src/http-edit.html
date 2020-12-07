@@ -65,26 +65,31 @@
         </div>
     </body>
     <script>
+        /**
+         * 追加返回值的条件
+         */ 
         function addRest() {
-            console.log("0000")
             $("#condition-rest").append(
                 '<div class="condition-rest-item">\n' +
-                '                            <label>参数</label>：<input type="text" placeholder="参数名..." class="paramname" />\n' +
-                '                            <select class="sel-condition">\n' +
-                '                                <option value="==">==</option>\n' +
-                '                                <option value=">">></option>\n' +
-                '                                <option value="<">\n' +
-                '                                    < </option>\n' +
-                '                                <option value="<=">\n' +
-                '                                    <= </option>\n' +
-                '                                <option value=">="> >= </option>\n' +
-                '                            </select>\n' +
-                '                            <input type="text" class="txt_condition">\n' +
-                '                            <input type="button" class="remove-result" value="-" />\n' +
-                '                            <textarea class="returnValue"></textarea>\n' +
-                '                        </div>'
+                '    <label>参数</label>：<input type="text" placeholder="参数名..." class="paramname" />\n' +
+                '    <select class="sel-condition">\n' +
+                '        <option value="==">==</option>\n' +
+                '        <option value=">">></option>\n' +
+                '        <option value="<">\n' +
+                '            < </option>\n' +
+                '        <option value="<=">\n' +
+                '            <= </option>\n' +
+                '        <option value=">="> >= </option>\n' +
+                '    </select>\n' +
+                '    <input type="text" class="txt_condition">\n' +
+                '    <input type="button" class="remove-result" value="-" />\n' +
+                '    <textarea class="returnValue"></textarea>\n' +
+                '</div>'
             )
         }
+        /**
+         * 追加请求的参数
+         */ 
         function addParam() {
             // 添加req name才能追加参数
             var flag = true
@@ -97,24 +102,27 @@
             if (flag) {
                 $("#request-data").append(
                     '<div class="cell-param-line">\n' +
-                    '                        <input type="text" placeholder="参数名..." name="name" />\n' +
-                    '                        <input type="number" class="number" value="20" placeholder="接收长度..." name="len" />\n' +
-                    '                        <select name="type">\n' +
-                    '                            <option value="string">string</option>\n' +
-                    '                            <option value="int">int</option>\n' +
-                    '                            <option value="float">float</option>\n' +
-                    '                            <option value="bool">bool</option>\n' +
-                    '                        </select>\n' +
-                    '                        <label>\n' +
-                    '                            required:<input type="checkbox" value="true" placeholder="必填" name="required" />\n' +
-                    '                        </label>\n' +
-                    '                        <input type="button" class="add-param" onclick="addParam()"  value="+" />\n' +
-                    '                        <input type="button" class="remove-param"  value="-" />\n' +
-                    '                    </div>'
+                    '    <input type="text" placeholder="参数名..." name="name" />\n' +
+                    '    <input type="number" class="number" value="20" placeholder="接收长度..." name="len" />\n' +
+                    '    <select name="type">\n' +
+                    '        <option value="string">string</option>\n' +
+                    '        <option value="int">int</option>\n' +
+                    '        <option value="float">float</option>\n' +
+                    '        <option value="bool">bool</option>\n' +
+                    '    </select>\n' +
+                    '    <label>\n' +
+                    '        required:<input type="checkbox" value="true" placeholder="必填" name="required" />\n' +
+                    '    </label>\n' +
+                    '    <input type="button" class="add-param" onclick="addParam()"  value="+" />\n' +
+                    '    <input type="button" class="remove-param"  value="-" />\n' +
+                    '</div>'
                 )
             }
         }
 
+        /**
+         * 保存请求的接口
+         */ 
         function submit() {
             //请求url
             var url = $('input[name="url"]').val()
@@ -145,17 +153,12 @@
                 res[escape(condition)] = $(item).find('.returnValue').val()
                 resArray.push(res)
             });
-            
             // TODO 保存数据
-
-
-
 
             console.log("提交的数据是：", url, method, reqArray, resArray)
         }
 
-
-        //删除request
+        //主入口
         $(function () {
             $('#request-data').on("click", ".remove-param", function () {
                 console.log($("#request-data").children().length)
@@ -163,12 +166,10 @@
                     $(this).parent().remove()
                 }
             });
-
             $('#condition-rest').on("click", ".remove-result", function () {
                 $(this).parent().remove()
             });
         })
-
     </script>
 
     </html>

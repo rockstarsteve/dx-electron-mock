@@ -25,6 +25,15 @@
     background-color: #C8C6C6;
 }
 
+.mainCont {
+    display: none;
+}
+
+.mainCont.selected {
+    display: block;
+}
+
+/* http接口页面start */
 .right-container {
     position: relative;
     flex-grow: 1;
@@ -88,3 +97,4 @@
         background-color: #6e736e;
     }
 }
+/* http接口页面end */
